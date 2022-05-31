@@ -10,6 +10,6 @@ class Game
   end
 
   def play
-    @menu.print_board
+    @menu.main_menu
   end
 end

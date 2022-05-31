@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Board state
+# Board state and to_s methods
 class Board
   include Enumerable
 
@@ -20,6 +20,10 @@ class Board
     @board.each(&block)
   end
 
+  def empty?
+    @board.flatten.all? nil
+  end
+
   def to_s
     output = ''
     7.downto(0) do |row_number|
@@ -30,6 +34,8 @@ class Board
     end
     output
   end
+
+  private
 
   def square_stdout(row_number, column_number)
     # column_letters = 'abcdefgh'
