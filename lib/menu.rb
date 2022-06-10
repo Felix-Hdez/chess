@@ -3,21 +3,10 @@
 require 'io/console'
 
 # The menu for the chess game
-class Menu
-  def initialize(board)
-    @board = board
-  end
-
-  def main_menu
-    Menu.clean_terminal
-    loop do
-      p read_char
-    end
-  end
-
+class   Menu
   # SOURCE: https://gist.github.com/acook/4190379
   # Reads keypresses from the user including 2 and 3 escape character sequences.
-  def read_char
+  def self.read_char
     $stdin.echo = false
     $stdin.raw!
 
@@ -42,17 +31,28 @@ class Menu
     return input
   end
 
-  def print_board
-    Menu.clean_terminal
-    print "-- C H E S S --\n"
-    print @board.to_s
-  end
-
   def self.clean_terminal_s
     "\e[1J\e[0;0H"
   end
 
   def self.clean_terminal
     print clean_terminal_s
+  end
+
+  def self.combine_strings(*args, padding: 0)
+    strings = args.map(&:to_s)
+    string_lines = strings.map { |string| string.split("\n") }
+    line_count = string_lines.map(&:size)
+    max_line_size = string_lines.map { |lines| lines.map(&:size).max }
+    output = ''
+    line_count.max.times do |line_i|
+      strings.size.times do |string_i|
+        if line_i < (string_lines[string_i].size)
+          output += string_lines[string_i][line_i].ljust(max_line_size[string_i] + padding, ' ')
+        end
+      end
+      output += "\n"
+    end
+    output
   end
 end
