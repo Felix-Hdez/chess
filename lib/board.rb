@@ -39,11 +39,16 @@ class Board
   private
 
   def colorize_square(square_text, row_number, column_number)
-    if (row_number + column_number).even?
-      "\e[30;48;2;229;229;16m#{square_text}\e[0m"
-    else
-      "\e[30;48;2;255;255;255m#{square_text}\e[0m"
-    end
+    # ESC[ 38;2;⟨r⟩;⟨g⟩;⟨b⟩ m Select RGB foreground color
+    # ESC[ 48;2;⟨r⟩;⟨g⟩;⟨b⟩ m Select RGB background color
+    # ESC[ 0m to reset text
+    # ESC[ is the Control Sequence Introducer
+    color = if (row_number + column_number).even?
+              { r: 229, g: 229, b: 16 }
+            else
+              { r: 255, g: 255, b: 255 }
+            end
+    "\e[48;2;#{color[:r]};#{color[:g]};#{color[:b]}m#{square_text}\e[0m"
   end
 
   def square_text(row_number, column_number)

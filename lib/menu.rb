@@ -3,7 +3,7 @@
 require 'io/console'
 
 # The menu for the chess game
-class   Menu
+class Menu
   # SOURCE: https://gist.github.com/acook/4190379
   # Reads keypresses from the user including 2 and 3 escape character sequences.
   def self.read_char
@@ -32,7 +32,11 @@ class   Menu
   end
 
   def self.clean_terminal_s
-    "\e[1J\e[0;0H"
+    # '\e[' is the Control Sequence Introducer (CSI)
+    # '2J' nJ clears the screen, n = 2 to clear the whole screen
+    # 'x;yH' puts the cursor at row x and column y, when skipped
+    # default values are 1;1 (start)
+    "\e[2J\e[;H"
   end
 
   def self.clean_terminal
