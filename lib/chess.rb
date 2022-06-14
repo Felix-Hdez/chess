@@ -11,7 +11,25 @@ class Chess
     @main_menu = MainMenu.new @board
   end
 
+  def start
+    choice = @main_menu.main_menu
+    case choice
+    when :new_game
+      play
+    when :load_game
+      puts 'Hasnt been implemented yet'
+      # load_game @main_menu.choose_save
+    when :quit
+      exit 0
+    else
+      raise 'choice is invalid'
+      exit 0
+    end
+  end
+
   def play
-    @main_menu.main_menu
+    puts 'Starting new game'
+    @board = Board.new_game
+    puts 'this will be implemented later'
   end
 end
