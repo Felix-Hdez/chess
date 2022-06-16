@@ -1,11 +1,28 @@
 # frozen_string_literal: true
 
-# Board state and to_s methods
 class Board
   include Enumerable
 
-  def initialize
-    @board = Array.new(8) { Array.new(8) { nil } }
+  def initialize(board_template = nil)
+    @board = if valid_template? board_template
+               unserialize_board board_template
+             else
+               Array.new(8) { Array.new(8) { nil } }
+             end
+    @pieces = [WhitePawn, WhiteRook, WhiteKnight, WhiteBishop, WhiteKing, WhiteQueen,
+               BlackPawn, BlackRook, BlackKnight, BlackBishop, BlackKing, BlackQueen]
+  end
+
+  def self.new_game
+    template = 'RNBQKBNR'\
+      'PPPPPPPP'\
+      '        '\
+      '        '\
+      '        '\
+      '        '\
+      'pppppppp'\
+      'rnbqkbnr'
+    Board.new template
   end
 
   def [](index)
@@ -34,6 +51,26 @@ class Board
       output += "\n"
     end
     output
+  end
+
+  def unserialize_board(board_template)
+    unserializer = {}
+    pieces.each do |piece|
+      unserializer[piece.string_representation] = piece
+    end
+    board_template.split('').each.with_index do |piece, index|
+      row = index / 8
+      column = index % 8
+      @board[row][column] = piece
+    end
+  end
+
+  def valid_template?(board_template)
+    return false if board_template.nil?
+
+    is_correct_size = board_template.size == 64
+    are_characters_valid = board_template.split('').all? { |char| %w[r n b q k p].include? char.downcase }
+    is_correct_size && are_characters_valid
   end
 
   private
