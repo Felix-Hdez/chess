@@ -7,7 +7,7 @@ require_relative 'menu/main_menu'
 
 class Chess
   def initialize
-    @board = Board.new
+    @board = Board.new_game
     @main_menu = MainMenu.new @board
   end
 
@@ -30,6 +30,7 @@ class Chess
   def play
     puts 'Starting new game'
     @board = Board.new_game
+    
     puts 'this will be implemented later'
   end
 end

@@ -18,7 +18,7 @@ class MainMenu < Menu
     loop do
       option_list = options.values.map.with_index do |value, index|
         if index == selection
-          "#{formatted_selector_str}\e[7m#{options.values[selection]}\e[0m"
+          "#{formatted_selector_str}\e[1m#{options.values[selection]}\e[0m"
         else
           "#{' ' * selector_str.size}#{value}"
         end
