@@ -5,5 +5,4 @@ class Knight < Piece
     super
     @piece_text = { white: '♘', black: '♞' }
   end
-
 end

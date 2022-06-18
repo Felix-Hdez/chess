@@ -6,13 +6,11 @@ require_relative 'menu'
 require_relative 'menu/main_menu'
 
 class Chess
-  def initialize
-    @board = Board.new_game
-    @main_menu = MainMenu.new @board
-  end
+  def initialize; end
 
   def start
-    choice = @main_menu.main_menu
+    main_menu = MainMenu.new Board.new_game
+    choice = main_menu.main_menu
     case choice
     when :new_game
       play
@@ -30,7 +28,6 @@ class Chess
   def play
     puts 'Starting new game'
     @board = Board.new_game
-    
     puts 'this will be implemented later'
   end
 end

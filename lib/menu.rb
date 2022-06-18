@@ -32,11 +32,14 @@ class Menu
   end
 
   def self.clean_terminal_s
+    # clear command prints this same string
     # '\e[' is the Control Sequence Introducer (CSI)
-    # '2J' nJ clears the screen, n = 2 to clear the whole screen
-    # 'x;yH' puts the cursor at row x and column y, when skipped
-    # default values are 1;1 (start)
-    "\e[2J\e[;H"
+    # '2J' nJ clears the screen
+    # n = 2 to clear the whole screen
+    # n = 3 to clear the scrollback buffer as well
+    # 'x;yH' puts the cursor at row x and column y
+    # when skipped default values are 1;1 (start)
+    "\e[H\e[2J\e[3J"
   end
 
   def self.clean_terminal
@@ -58,5 +61,33 @@ class Menu
       output += "\n"
     end
     output
+  end
+
+  # ESC[ 38;2;⟨r⟩;⟨g⟩;⟨b⟩ m Select RGB foreground color
+  # ESC[ 48;2;⟨r⟩;⟨g⟩;⟨b⟩ m Select RGB background color
+  # ESC[ 0m to reset text
+  # ESC[ is the Control Sequence Introducer
+  def self.color_foreground(red, green, blue, text)
+    "\e[38;2;#{red};#{green};#{blue}m#{text}\e[0m"
+  end
+
+  def self.color_background(red, green, blue, text)
+    "\e[48;2;#{red};#{green};#{blue}m#{text}\e[0m"
+  end
+
+  def self.format_menu_list(options, selector_str, selection, selector_color = nil)
+    formatted_selector_str = if selector_color.nil?
+                               selector_str
+                             else
+                               red, green, blue = selector_color
+                               color_foreground(red, green, blue, selector_str)
+                             end
+    options.values.map.with_index do |value, index|
+      if index == selection
+        "#{formatted_selector_str}\e[1m#{value}\e[0m"
+      else
+        "#{' ' * selector_str.size}#{value}"
+      end
+    end
   end
 end

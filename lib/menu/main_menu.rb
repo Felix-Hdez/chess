@@ -12,17 +12,11 @@ class MainMenu < Menu
   def main_menu
     Menu.clean_terminal
     selector_str = '♕ '
-    formatted_selector_str = "\e[1;38;2;229;229;16m#{selector_str}\e[0m"
+    selector_color = [255, 255, 16] # [r, g, b]
     selection = 0
     options = { new_game: 'New game', load_game: 'Load game', quit: 'Exit' }
     loop do
-      option_list = options.values.map.with_index do |value, index|
-        if index == selection
-          "#{formatted_selector_str}\e[1m#{options.values[selection]}\e[0m"
-        else
-          "#{' ' * selector_str.size}#{value}"
-        end
-      end
+      option_list = Menu.format_menu_list(options, selector_str, selection, selector_color)
       menu_text = (["  - C H E S S -\n"] + option_list).join "\n  "
       print Menu.clean_terminal_s + Menu.combine_strings(@board, menu_text, padding: 2)
       input = Menu.read_char

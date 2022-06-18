@@ -17,7 +17,7 @@ class Piece
 
     return nil if str_representation == ' '
 
-    is_white_piece = str_representation == str_representation.downcase
+    is_white_piece = str_representation != str_representation.downcase
     pieces = { 'p' => Pawn, 'r' => Rook, 'n' => Knight, 'b' => Bishop, 'q' => Queen, 'k' => King }
     pieces[str_representation.downcase].new(is_white_piece)
   end

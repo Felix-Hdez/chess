@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'piece'
+require_relative 'menu'
 
 class Board
   include Enumerable
@@ -76,10 +77,11 @@ class Board
   private
 
   def colorize_square(square_text, row_number, column_number)
+    square_text = Menu.color_foreground(0, 0, 0, square_text)
     if (row_number + column_number).even?
-      color_background(229, 229, 16, square_text)
+      Menu.color_background(229, 229, 16, square_text)
     else
-      color_background(255, 255, 255, square_text)
+      Menu.color_background(255, 255, 255, square_text)
     end
   end
 
@@ -92,11 +94,4 @@ class Board
     "#{piece_text}  "[...2]
   end
 
-  def color_background(red, green, blue, text)
-    # ESC[ 38;2;⟨r⟩;⟨g⟩;⟨b⟩ m Select RGB foreground color
-    # ESC[ 48;2;⟨r⟩;⟨g⟩;⟨b⟩ m Select RGB background color
-    # ESC[ 0m to reset text
-    # ESC[ is the Control Sequence Introducer
-    "\e[48;2;#{red};#{green};#{blue}m#{text}\e[0m"
-  end
 end
