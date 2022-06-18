@@ -3,6 +3,8 @@
 require_relative 'piece'
 require_relative 'menu'
 
+# An array with extra methods
+# Supports having nil and Piece descendants as elements of the array.
 class Board
   include Enumerable
 
@@ -93,5 +95,4 @@ class Board
     piece_text = (piece.nil? ? '' : piece.piece_text)
     "#{piece_text}  "[...2]
   end
-
 end

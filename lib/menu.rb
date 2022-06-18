@@ -2,7 +2,7 @@
 
 require 'io/console'
 
-# The menu for the chess game
+# Terminal and string utilities for menus and terminal (out/in)put
 class Menu
   # SOURCE: https://gist.github.com/acook/4190379
   # Reads keypresses from the user including 2 and 3 escape character sequences.

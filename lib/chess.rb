@@ -3,31 +3,41 @@
 require_relative 'board'
 require_relative 'piece'
 require_relative 'menu'
-require_relative 'menu/main_menu'
+require_relative 'main_menu'
 
+# App controller
 class Chess
-  def initialize; end
+  def initialize
+    @main_menu = MainMenu.new Board.new_game
+  end
 
   def start
-    main_menu = MainMenu.new Board.new_game
-    choice = main_menu.main_menu
+    choice = @main_menu.main_menu
     case choice
     when :new_game
       play
     when :load_game
-      puts 'Hasnt been implemented yet'
-      # load_game @main_menu.choose_save
+      name = @main_menu.load_game
+      play(name) unless name.nil?
     when :quit
       exit 0
     else
       raise 'choice is invalid'
-      exit 0
     end
   end
 
-  def play
-    puts 'Starting new game'
-    @board = Board.new_game
-    puts 'this will be implemented later'
+  def play(name = nil)
+    game = (game.nil? ? Game.new : Game.load_game(name))
+    game_menu = GameMenu.new game
+    loop do
+      move = game_menu.make_move
+      case move
+      when :move
+        break if game.game_over?
+      when :quit
+        main_menu.save_game
+        break
+      end
+    end
   end
 end

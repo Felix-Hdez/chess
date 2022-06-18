@@ -2,8 +2,8 @@
 
 require_relative '../menu'
 
-# Has the main menu of our chess program
-class MainMenu < Menu
+# Main menu of our chess program
+class MainMenu
   def initialize(board)
     super()
     @board = board
@@ -37,10 +37,5 @@ class MainMenu < Menu
       end
       # handle input
     end
-  end
-
-  def print_board
-    Menu.clean_terminal
-    print "-- C H E S S --\n#{board}"
   end
 end

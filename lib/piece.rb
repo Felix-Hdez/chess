@@ -7,6 +7,7 @@ Dir["#{File.dirname(__FILE__)}/piece/*"].each do |file|
   require file
 end
 
+# Average piece
 class Piece
   def initialize(is_white)
     @color = (is_white ? :white : :black)

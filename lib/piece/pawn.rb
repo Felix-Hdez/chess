@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Pawn piece
 class Pawn < Piece
   def initialize(is_white)
     super
